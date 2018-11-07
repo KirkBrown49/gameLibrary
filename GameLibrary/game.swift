@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 class Game {
     
@@ -34,55 +33,21 @@ class Game {
     enum Availabilty {
         case checkedIn
         case checkedOut(dueDate:Date)
-        init(date:Date?) {
-            if let date = date {
-                self = .checkedOut(dueDate: date)
-            }else{
-                self = .checkedIn
-            }
-        }
     }
+    let title: String
+    let detail: String
+    let rating: Rating
+    let genre: Genre
+    var availability: Availabilty
     
-    
-    @objc dynamic var title: String = ""
-    @objc dynamic var  detail: String = ""
-    @objc private dynamic var ratingInternal: String = ""
-    @objc private dynamic var genreInternal: String = ""
-    @objc private dynamic var availInternal: Date? = nil
-    var rating: Rating {
-        get {
-            return Rating(rawValue: ratingInternal)!
-        } set {
-            ratingInternal = rating.rawValue
-        }
-    }
-    var genre: Genre {
-        get {
-            return Genre(rawValue: genreInternal)!
-        } set {
-            genreInternal = genre.rawValue
-        }
-    }
-    var availability: Availabilty {
-        get {
-            return Availabilty(date: availInternal)
-        }
-        set {
-            switch availability {
-                case .checkedIn:
-                availInternal = nil
-                case .checkedOut(let date):
-                availInternal = date
-            }
-        }
-    }
-    
-    convenience init(title: String, detail: String, rating: Rating,genre: Genre) {
-        self.init()
+    init(title: String, detail: String, rating: Rating,genre: Genre) {
         self.title = title
         self.detail = detail
         self.rating  = rating
         self.genre = genre
         self.availability = .checkedIn
     }
+    
+    
+    
 }
